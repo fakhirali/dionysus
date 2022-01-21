@@ -1,1 +1,0 @@
-/usr/bin/c++  -O3 -DNDEBUG  -rdynamic CMakeFiles/rips-zigzag.dir/rips-zigzag.cpp.o  -o rips-zigzag 

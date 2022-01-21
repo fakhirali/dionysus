@@ -1,1 +1,0 @@
-/usr/bin/c++  -O3 -DNDEBUG  -rdynamic CMakeFiles/relative-zz-filtration.dir/relative-zz-filtration.cpp.o  -o relative-zz-filtration 

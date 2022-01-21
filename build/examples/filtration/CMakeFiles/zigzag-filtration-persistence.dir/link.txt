@@ -1,1 +1,0 @@
-/usr/bin/c++  -O3 -DNDEBUG  -rdynamic CMakeFiles/zigzag-filtration-persistence.dir/zigzag-filtration-persistence.cpp.o  -o zigzag-filtration-persistence 

@@ -1,1 +1,0 @@
-/usr/bin/c++  -O3 -DNDEBUG  -rdynamic CMakeFiles/omni-field-persistence.dir/omni-field-persistence.cpp.o  -o omni-field-persistence 
