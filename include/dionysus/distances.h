@@ -86,6 +86,37 @@ struct L2Distance
     }
 };
 
+template<class Point_>
+struct CosineSimilarity
+{
+    typedef         Point_                          Point;
+    typedef         decltype(Point()[0] + 0)        result_type;
+
+    result_type     operator()(const Point& p1, const Point& p2) const
+    {
+        result_type numerator_sum = 0;
+        for (size_t i = 0; i < p1.size(); ++i)
+            numerator_sum += p1[i] * p2[i];
+
+		result_type magnitude_sum1 = 0;
+		result_type magnitude_sum2 = 0;
+        for (size_t i = 0; i < p1.size(); ++i){
+            magnitude_sum1 += p1[i] * p1[i];
+			magnitude_sum2 += p2[i] * p2[i];
+		}
+
+		result_type denominator = sqrt(magnitude_sum1) * sqrt(magnitude_sum2);
+		result_type ans = acos(numerator_sum / denominator) / M_PI;
+
+
+
+	
+
+        return ans;
+    }
+};
+
+
 }
 
 #include "distances.hpp"

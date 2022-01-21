@@ -46,7 +46,7 @@ Alternatively, you can install it directly from the development repository (this
 
 .. parsed-literal::
 
-    pip install --verbose `git+https://github.com/mrzv/dionysus.git <https://github.com/mrzv/dionysus.git>`_
+    pip install --verbose `git+https://github.com/fakhirali/dionysus.git <https://github.com/fakhirali/dionysus.git>`_
 
 Alternatively, you can clone and build everything by hand.
 To get Dionysus 2, either clone its `repository <https://github.com/mrzv/dionysus>`_:
