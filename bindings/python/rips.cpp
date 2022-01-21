@@ -52,7 +52,10 @@ struct PairwiseDistances
     // NB: squared distance; below we pass r*r into rips.generate(...)
     DistanceType operator()(int u, int v) const
     {
-        DistanceType res = 0;
+        DistanceType numerator_sum = 0;
+        DistanceType magnitude_sum1 = 0;
+	DistanceType magnitude_sum2 = 0;
+	
         for (size_t i = 0; i < dim; ++i)
         {
             const void* xptr = a.data(u, i);
@@ -61,8 +64,12 @@ struct PairwiseDistances
             T x = *static_cast<const T*>(xptr);
             T y = *static_cast<const T*>(yptr);
 
-            res += (x - y)*(x - y);
+            numerator_sum += x * y;
+            magnitude_sum1 += x * x;
+            magnitude_sum2 += y * y;
         }
+        DistanceType denominator = sqrt(magnitude_sum1) * sqrt(magnitude_sum2);
+        DistanceType res = acos(numerator_sum / denominator) / M_PI;
 
         return res;
     }
@@ -73,6 +80,8 @@ struct PairwiseDistances
     const py::array&    a;
     size_t              dim;
 };
+
+
 
 template<class Distances>
 PyFiltration fill_rips_(py::array a, unsigned k, double r)
