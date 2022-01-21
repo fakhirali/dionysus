@@ -52,6 +52,41 @@ struct PairwiseDistances
     // NB: squared distance; below we pass r*r into rips.generate(...)
     DistanceType operator()(int u, int v) const
     {
+        DistanceType res = 0;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            const void* xptr = a.data(u, i);
+            const void* yptr = a.data(v, i);
+
+            T x = *static_cast<const T*>(xptr);
+            T y = *static_cast<const T*>(yptr);
+
+            res += (x - y)*(x - y);
+        }
+
+        return res;
+    }
+
+    IndexType   begin() const       { return 0; };
+    IndexType   end() const         { return a.shape(0); }
+
+    const py::array&    a;
+    size_t              dim;
+};
+
+
+template<class T>
+struct CosineSimilarity
+{
+    using IndexType     = int;
+    using DistanceType  = float;
+
+           CosineSimilarity(const py::array& a_):
+               a(a_), dim(a.shape(1))       {}
+
+    // NB: squared distance; below we pass r*r into rips.generate(...)
+    DistanceType operator()(int u, int v) const
+    {
         DistanceType numerator_sum = 0;
         DistanceType magnitude_sum1 = 0;
 	DistanceType magnitude_sum2 = 0;
@@ -114,9 +149,9 @@ PyFiltration fill_rips(py::array a, unsigned k, double r)
         // PairwiseDistances returns squared distances, so we use r*r
         PyFiltration f;
         if (a.dtype().is(py::dtype::of<float>()))
-            f = fill_rips_<PairwiseDistances<float>>(a,k,r*r);
+            f = fill_rips_<CosineSimilarity<float>>(a,k,r*r);
         else if (a.dtype().is(py::dtype::of<double>()))
-            f = fill_rips_<PairwiseDistances<double>>(a,k,r*r);
+            f = fill_rips_<CosineSimilarity<double>>(a,k,r*r);
         else
             throw std::runtime_error("Unknown array dtype");
 
